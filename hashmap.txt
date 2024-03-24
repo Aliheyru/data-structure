@@ -1,0 +1,42 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class HashMapTree<K1, K2, V> {
+    private HashMap<K1, HashMap<K2, V>> tree;
+
+    public HashMapTree() {
+        tree = new HashMap<>();
+    }
+
+    public void put(K1 key1, K2 key2, V value) {
+        if (!tree.containsKey(key1)) {
+            tree.put(key1, new HashMap<>());
+        }
+        tree.get(key1).put(key2, value);
+    }
+
+    public V get(K1 key1, K2 key2) {
+        if (tree.containsKey(key1)) {
+            HashMap<K2, V> innerMap = tree.get(key1);
+            if (innerMap.containsKey(key2)) {
+                return innerMap.get(key2);
+            }
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        HashMapTree<String, Integer, String> hashMapTree = new HashMapTree<>();
+        hashMapTree.put("Key1", 1, "Value1");
+        hashMapTree.put("Key2", 2, "Value2");
+
+        String value1 = hashMapTree.get("Key1", 1);
+        System.out.println(value1);  // Output: Value1
+
+        String value2 = hashMapTree.get("Key2", 2);
+        System.out.println(value2);  // Output: Value2
+
+        String value3 = hashMapTree.get("Key3", 3);
+        System.out.println(value3);  // Output: null
+    }
+}
